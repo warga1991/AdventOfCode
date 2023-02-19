@@ -14,14 +14,15 @@ for i in range(len(content)):
         temp += content[i]
 numArray.append(int(temp))
 
-maxSum = 0
+sums = []
 tempSum = 0
 for i in range(len(numArray)):
     if numArray[i] != 0:
         tempSum += numArray[i]
     else:
-        if tempSum > maxSum:
-            maxSum = tempSum
+        sums.append(tempSum)
         tempSum = 0
-       
+sums.sort()
+print(sums)
+maxSum = sums[-1] + sums[-2] + sums[-3]
 print(maxSum)
