@@ -10,23 +10,25 @@ mf.close()
 
 def score_fcn(opponent, me):
     score = 0
-    win = { 'A': ['Y', 2],
-            'B': ['Z', 3],
-            'C': ['X', 1]}
-    draw = { 'A': ['X', 1],
-             'B': ['Y', 2],
-             'C': ['Z', 3]}
-    lose = { 'A': ['Z', 3],
-             'B': ['X', 1],
-             'C': ['Y', 2]}
-
-    if me == win[opponent][0]:
-        score = 6 + win[opponent][1] 
-    elif me == draw[opponent][0]:
-        score = 3 + draw[opponent][1]
+    res = { 'X': 0,
+            'Y': 3,
+            'Z': 6}
+    val = { 'A': 1,
+            'B': 2,
+            'C': 3}
+    score = res[me]
+    if me == 'Y':
+        score += val[opponent]
+    elif me == 'Z':
+        if opponent == 'C':
+            score += 1
+        else:
+            score += val[opponent] + 1
     else:
-        score = lose[opponent][1]
-
+        if opponent == 'A':
+            score += 3
+        else:
+            score += val[opponent] - 1
     return score
     
 
