@@ -2,11 +2,9 @@ array = []
 
 mf = open(r"C:\Users\Donát\Documents\GitHub\AdventOfCode\day2\input.txt", 'r+')
 for line in mf:
-    #print(line)
-    #temp = [line[0], line[2]]
+    temp = [line[0], line[2]]
     array.append(line.split())
 mf.close()
-print(array)
 
 
 def score_fcn(opponent, me):
