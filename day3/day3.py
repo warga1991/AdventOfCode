@@ -1,6 +1,7 @@
 import sys
 sys.path.insert(0, r'C:\Users\Donát\Documents\GitHub\AdventOfCode\functions')
 from read_in import read_lines_in
+from itertools import combinations, permutations
 
 abc_letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -14,20 +15,27 @@ for i in range(2 * abc_length):
     priority_values[temp] = i + 1
 
 raw_input_array = read_lines_in(r"C:\Users\Donát\Documents\GitHub\AdventOfCode\day3\input.txt")
-first_container_array = list(map(lambda x: x[0:int(len(x)/2)], raw_input_array))
-second_container_array = list(map(lambda x: x[int(len(x)/2):], raw_input_array))
+
+unique_items_backpack_array = []
+for line in raw_input_array:
+    unique_items = ''.join(set(line))
+    sorted_unique_items = sorted(unique_items)
+    unique_items_backpack_array.append(''.join(sorted_unique_items))
+
+possible_backpack_combinations = list(combinations(unique_items_backpack_array, 3))
 
 priority_sum = 0
-for i in range(len(first_container_array)):
-    first_container = first_container_array[i]
-    second_container = second_container_array[i]
-    shared_items = []
-
-    for first_container_item in first_container:
-        if first_container_item in second_container:
-            if first_container_item not in shared_items:
-                shared_items.append(first_container_item)
-            
-    for item in shared_items:
-        priority_sum += priority_values[item]
+matched_groups = []
+for possible_group in possible_backpack_combinations:
+    matching_item_cnt = 0
+    badge = ''
+    for item in possible_group[0]:
+        if item in possible_group[1]:
+            if item in possible_group[2]:
+                badge = item
+                matching_item_cnt += 1
+    if matching_item_cnt == 1 and possible_group[0] not in matched_groups and possible_group[1] not in matched_groups and possible_group[2] not in matched_groups:
+        priority_sum += priority_values[badge]
+        for i in range(3):
+            matched_groups.append(possible_group[i])
 print(priority_sum)
