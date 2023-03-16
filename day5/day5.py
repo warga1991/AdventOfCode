@@ -16,7 +16,6 @@ for line in mf:
         temp.pop(index)
     container_stack_lines.append(temp)
 mf.close()
-#print(container_stack_lines)
 
 reversed_container_stack_lines = list(reversed(container_stack_lines))
 reversed_container_stack_lines.pop(0) # remove number line
@@ -30,7 +29,7 @@ for horizontal_container_reading in reversed_container_stack_lines:
 for cargo in container_stacks:
     while ' ' in cargo:
         cargo.remove(' ')
-[print(stack) for stack in container_stacks]
+#[print(stack) for stack in container_stacks]
 
 command_array = read_sentences_in(r"C:\Users\Donát\Documents\GitHub\AdventOfCode\day5\input_commands.txt")
 
@@ -43,8 +42,9 @@ for command in command_array:
     cargo_num = command[0]
     cargo_origin = command[1] - 1
     cargo_destination = command[2] - 1
+    container_stacks[cargo_destination].append(container_stacks[cargo_origin][len(container_stacks[cargo_origin]) - cargo_num : ])
+    container_stacks[cargo_destination] = [item for sublist in container_stacks[cargo_destination] for item in sublist]
     for i in range(cargo_num):
-        container_stacks[cargo_destination].append(container_stacks[cargo_origin][-1])
         container_stacks[cargo_origin].pop()
 
 tops = ''
