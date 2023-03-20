@@ -8,9 +8,9 @@ marker = []
 for index, char in enumerate(raw_signal_input):
     temp = []
     marker.append(char)
-    if index > 3:
+    if index > 13:
         marker.pop(0)
     temp = [*set(marker)]
-    if len(temp) == 4:
+    if len(temp) == 14:
         print(index + 1)
         break
