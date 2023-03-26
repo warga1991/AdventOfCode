@@ -25,7 +25,14 @@ class Folder():
             subfolder.small_folders(folders)
         if self.small_folder:
             folders.append(self.size)
-        return folders            
+        return folders
+
+    def folders_larger_than(self, folders, space):
+        for subfolder in self.subfolders:
+            subfolder.folders_larger_than(folders, space)
+        if self.size > space:
+            folders.append(self.size)
+        return folders             
 
 terminal_input = read_sentences_in(r"C:\Users\Donát\Documents\GitHub\AdventOfCode\day7\input.txt")
 
@@ -47,8 +54,15 @@ for index, command in enumerate(terminal_input):
         current_dir.add_size(int(command[0]))
 
 small_folders = []    
-root_dir.small_folders(small_folders) 
+root_dir.small_folders(small_folders)
 small_folder_size_sum = 0
 for folder in small_folders:
     small_folder_size_sum += folder
 print(small_folder_size_sum)
+
+free_space = 70000000 - root_dir.size
+needed_space = 30000000 - free_space
+deletable_folders = []
+root_dir.folders_larger_than(deletable_folders, needed_space)
+deletable_folders.sort()
+print(deletable_folders[0])
